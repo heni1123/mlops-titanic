@@ -1,0 +1,30 @@
+stages:
+  make_dataset:
+    cmd: python src/make_dataset.py --version ${dataset.version} --out data/raw.csv
+    deps:
+      - src/make_dataset.py
+    params:
+      - dataset.version
+    outs:
+      - data/raw.csv
+
+  train:
+    cmd: python src/train.py --data data/raw.csv --model_out models/model.pkl
+    deps:
+      - src/train.py
+      - data/raw.csv
+    params:
+      - train
+      - dataset.version
+    outs:
+      - models/model.pkl
+
+  evaluate:
+    cmd: python src/evaluate.py --data data/raw.csv --model models/model.pkl --metrics reports/metrics.json
+    deps:
+      - src/evaluate.py
+      - data/raw.csv
+      - models/model.pkl
+    outs:
+      - reports/metrics.json
+

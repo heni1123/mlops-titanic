@@ -1,0 +1,62 @@
+schema: '2.0'
+stages:
+  make_dataset:
+    cmd: python src/make_dataset.py --version v3 --out data/raw.csv
+    deps:
+    - path: src/make_dataset.py
+      hash: md5
+      md5: 31f9ae4f101a87344582a9eae4232384
+      size: 1158
+    params:
+      params.yaml:
+        dataset.version: v3
+    outs:
+    - path: data/raw.csv
+      hash: md5
+      md5: b21850dbc75bc238a4dc6b405d8e4d84
+      size: 29106
+  train:
+    cmd: python src/train.py --data data/raw.csv --model_out models/model.pkl
+    deps:
+    - path: data/raw.csv
+      hash: md5
+      md5: b21850dbc75bc238a4dc6b405d8e4d84
+      size: 29106
+    - path: src/train.py
+      hash: md5
+      md5: 6830ade6c61600bc0d6a8248180f4a43
+      size: 2680
+    params:
+      params.yaml:
+        dataset.version: v3
+        train:
+          model: logistic_regression
+          test_size: 0.2
+          random_state: 42
+          C: 1.0
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: 3379e74ecbf76b8d9724928739a762b0
+      size: 4154
+  evaluate:
+    cmd: python src/evaluate.py --data data/raw.csv --model models/model.pkl 
+      --metrics reports/metrics.json
+    deps:
+    - path: data/raw.csv
+      hash: md5
+      md5: b21850dbc75bc238a4dc6b405d8e4d84
+      size: 29106
+    - path: models/model.pkl
+      hash: md5
+      md5: 3379e74ecbf76b8d9724928739a762b0
+      size: 4154
+    - path: src/evaluate.py
+      hash: md5
+      md5: 4d67fde717d1152062627313fbcd2add
+      size: 1342
+    outs:
+    - path: reports/metrics.json
+      hash: md5
+      md5: 45d87dbe582c4c42124ccf504ea639a6
+      size: 130

@@ -1,0 +1,15 @@
+# Python / env
+.venv/
+__pycache__/
+*.pyc
+
+# MLflow
+mlruns/
+mlflow.db
+
+# DVC cache
+.dvc/cache/
+
+# Data (tracked by DVC)
+data/
+!data/.gitkeep

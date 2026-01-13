@@ -1,0 +1,8 @@
+dataset:
+  name: titanic
+  version: v3
+train:
+  model: logistic_regression
+  test_size: 0.2
+  random_state: 42
+  C: 1.0
