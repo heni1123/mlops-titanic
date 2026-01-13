@@ -33,11 +33,11 @@ stages:
           model: logistic_regression
           test_size: 0.2
           random_state: 42
-          C: 1.0
+          C: 0.5
     outs:
     - path: models/model.pkl
       hash: md5
-      md5: 3379e74ecbf76b8d9724928739a762b0
+      md5: 2fa0607eb286c73fbd4f4bdd0d9f180b
       size: 4154
   evaluate:
     cmd: python src/evaluate.py --data data/raw.csv --model models/model.pkl 
