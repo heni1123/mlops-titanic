@@ -1,6 +1,0 @@
-{
-  "dataset_name": "titanic",
-  "dataset_version": "v3",
-  "roc_auc": 0.8395635673624289,
-  "accuracy": 0.7655502392344498
-}
