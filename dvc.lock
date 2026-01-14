@@ -49,7 +49,7 @@ stages:
       size: 29106
     - path: models/model.pkl
       hash: md5
-      md5: 3379e74ecbf76b8d9724928739a762b0
+      md5: 2fa0607eb286c73fbd4f4bdd0d9f180b
       size: 4154
     - path: src/evaluate.py
       hash: md5
@@ -58,5 +58,52 @@ stages:
     outs:
     - path: reports/metrics.json
       hash: md5
-      md5: 45d87dbe582c4c42124ccf504ea639a6
+      md5: 73fedf085778d4b585b2f0eb06259078
       size: 130
+  compute_train_stats:
+    cmd: python monitoring/compute_train_stats.py
+    deps:
+    - path: data/raw.csv
+      hash: md5
+      md5: b21850dbc75bc238a4dc6b405d8e4d84
+      size: 29106
+    - path: monitoring/compute_train_stats.py
+      hash: md5
+      md5: 2a20984c3823bdc59606e92f7312384b
+      size: 577
+    outs:
+    - path: stats/train_stats.json
+      hash: md5
+      md5: e07c178d988a3a71c8cc48cb423da767
+      size: 494
+  generate_prod_data:
+    cmd: python monitoring/generate_prod_data.py
+    deps:
+    - path: data/raw.csv
+      hash: md5
+      md5: b21850dbc75bc238a4dc6b405d8e4d84
+      size: 29106
+    - path: monitoring/generate_prod_data.py
+      hash: md5
+      md5: af893a92346280204186ff30585238aa
+      size: 506
+    outs:
+    - path: data/prod.csv
+      hash: md5
+      md5: e1538d692df9a12f0bfa684499eb9eea
+      size: 94941
+  detect_drift:
+    cmd: python monitoring/detect_drift.py
+    deps:
+    - path: data/prod.csv
+      hash: md5
+      md5: e1538d692df9a12f0bfa684499eb9eea
+      size: 94941
+    - path: monitoring/detect_drift.py
+      hash: md5
+      md5: 06f64344fd2dbda8af3260e0f1285c5b
+      size: 645
+    - path: stats/train_stats.json
+      hash: md5
+      md5: e07c178d988a3a71c8cc48cb423da767
+      size: 494
